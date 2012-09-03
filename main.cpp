@@ -43,9 +43,14 @@
 #include <qslider.h>
 #include <qpushbutton.h>
 #include <qlcdnumber.h>
+#include <qmenubar.h>
+#include <qmenu.h>
+#include <qmessagebox.h>
 
 int main(int argc, char* argv[])
 {
+    // XXX: Need to be fixed
+
     QApplication myapp(argc, argv);
     QWidget* mywidget = new QWidget;
     mywidget->setGeometry(400, 400,200,200);
@@ -67,7 +72,6 @@ int main(int argc, char* argv[])
     myslider->setMaximum(9);
     myslider->setGeometry(10, 100, 100, 30);
     myslider->setTickPosition(QSlider::TicksBelow);
-    /**/
 
     // optional
 
@@ -77,6 +81,14 @@ int main(int argc, char* argv[])
 
     QObject::connect(myslider, SIGNAL(sliderMoved(int)),
                      mylcdnumber, SLOT(display(int))); // Connecting signals into slots
+
+    // Menu
+    QMenuBar* qmenubar = new QMenuBar(mywidget);
+    QMenu* filemenu = new QMenu("&FIle", qmenubar);
+    QMenu* helpmenu = new QMenu("Help", filemenu);
+    filemenu->addAction("N&ew...");
+    filemenu->addMenu(helpmenu);
+    qmenubar->addMenu(filemenu);
 
     mywidget->show();
     return myapp.exec();
